@@ -12,6 +12,12 @@ SystemJS.config({
   packages: {
     "circle": {
       "main": "circle.js",
+      "map": {
+        "./hot-reload-utils.js": {
+          "node": "@empty",
+          "production": "@empty"
+        }
+      },
       "meta": {
         "*.js": {
           "loader": "plugin-babel"
@@ -46,6 +52,8 @@ SystemJS.config({
     "process": "github:jspm/nodelibs-process@0.2.0-alpha",
     "react": "npm:react@15.1.0",
     "react-dom": "npm:react-dom@15.1.0",
+    "react-redux": "npm:react-redux@4.4.5",
+    "redux": "npm:redux@3.5.2",
     "stream": "github:jspm/nodelibs-stream@0.2.0-alpha",
     "string_decoder": "github:jspm/nodelibs-string_decoder@0.2.0-alpha",
     "systemjs-hot-reloader": "github:capaj/systemjs-hot-reloader@0.5.8",
@@ -387,6 +395,14 @@ SystemJS.config({
         "randombytes": "npm:randombytes@2.0.3"
       }
     },
+    "npm:react-redux@4.4.5": {
+      "map": {
+        "hoist-non-react-statics": "npm:hoist-non-react-statics@1.0.6",
+        "invariant": "npm:invariant@2.2.1",
+        "lodash": "npm:lodash@4.13.1",
+        "loose-envify": "npm:loose-envify@1.2.0"
+      }
+    },
     "npm:react@15.1.0": {
       "map": {
         "fbjs": "npm:fbjs@0.8.2",
@@ -403,6 +419,14 @@ SystemJS.config({
         "process-nextick-args": "npm:process-nextick-args@1.0.7",
         "string_decoder": "npm:string_decoder@0.10.31",
         "util-deprecate": "npm:util-deprecate@1.0.2"
+      }
+    },
+    "npm:redux@3.5.2": {
+      "map": {
+        "lodash": "npm:lodash@4.13.1",
+        "lodash-es": "npm:lodash-es@4.13.1",
+        "loose-envify": "npm:loose-envify@1.2.0",
+        "symbol-observable": "npm:symbol-observable@0.2.4"
       }
     },
     "npm:sha.js@2.4.5": {
