@@ -2,10 +2,18 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>fft.audio</title>
+    <title>circle</title>
+    <script src="jspm_packages/system.js"></script>
+    <script src="jspm.browser.js"></script>
+    <script src="jspm.config.js"></script>
   </head>
   <body>
-    <h1>fft.audio</h1>
-    <p>FFT: Fast Fourier Transform</p>
+    <h1>circle</h1>
+      <div id="container"></div>
+      <script
+        src="build.js"
+        onload="SystemJS.config({production: true}); SystemJS.import('circle/main.js')"
+        onerror="console.info('Development'); SystemJS.config({trace: true}); SystemJS.import('src/main.js')"
+      ></script>
   </body>
 </html>

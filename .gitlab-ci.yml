@@ -1,9 +1,9 @@
 pages:
   stage: deploy
   script:
-  - mkdir .public
-  - cp -r * .public
-  - mv .public public
+  - npm install --no-optional
+  - node_modules/.bin/jspm install
+  - npm run build
   artifacts:
     paths:
     - public

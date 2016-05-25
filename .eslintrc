@@ -1,0 +1,15 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["standard", "standard-react"],
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "globals": {
+    "SystemJS": true
+  },
+  "plugins": [
+    "react",
+    "babel"
+  ]
+}
