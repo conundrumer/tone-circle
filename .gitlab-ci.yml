@@ -1,4 +1,11 @@
+image: node:6.2.0
+
 pages:
+  cache:
+    paths:
+    - node_modules/
+    - jspm_packages/
+
   stage: deploy
   script:
   - npm install --no-optional
