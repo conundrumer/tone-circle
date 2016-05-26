@@ -8,20 +8,14 @@ export const selectLimit = (limitIndex) => ({ type: SELECT_LIMIT, limitIndex })
 // factorArrayJson: array [n, m, ...] representing ratio 3^n * 5^m * ...
 export const toggleRatio = (factorArrayJson) => ({ type: TOGGLE_RATIO, factorArrayJson })
 
-const PRIMES = [3, 5, 7, 11, 13]
+export const selectRatioOption = (ratioFormat) => ({ type: SELECT_RATIO_OPTION, ratioFormat })
 
-export const RatioOptions = {
-  COMPOSITE: 'Composite',
-  FACTORED: 'Factored',
-  NO_OCTAVES: 'Factored Without Octaves'
-}
-export const selectRatioOption = (option) => ({ type: SELECT_RATIO_OPTION, option})
+import {COMPOSITE} from './ratio-format.js'
 
 const INIT = {
-  primes: PRIMES,
   limitIndex: 0,
   toggledRatios: {},
-  ratioOption: RatioOptions.COMPOSITE
+  ratioFormat: COMPOSITE
 }
 
 export default function rootReducer (state = INIT, action) {
@@ -43,7 +37,7 @@ export default function rootReducer (state = INIT, action) {
       })
     case SELECT_RATIO_OPTION:
       return Object.assign({}, state, {
-        ratioOption: action.option
+        ratioFormat: action.ratioFormat
       })
   }
   return state
