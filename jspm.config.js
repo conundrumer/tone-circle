@@ -54,6 +54,7 @@ SystemJS.config({
     "react-dom": "npm:react-dom@15.1.0",
     "react-redux": "npm:react-redux@4.4.5",
     "redux": "npm:redux@3.5.2",
+    "reselect": "npm:reselect@2.5.1",
     "stream": "github:jspm/nodelibs-stream@0.2.0-alpha",
     "string_decoder": "github:jspm/nodelibs-string_decoder@0.2.0-alpha",
     "systemjs-hot-reloader": "github:capaj/systemjs-hot-reloader@0.5.8",

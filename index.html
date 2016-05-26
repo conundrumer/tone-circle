@@ -2,18 +2,47 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>circle</title>
+    <title>Tone Circle</title>
     <script src="jspm_packages/system.js"></script>
     <script src="jspm.browser.js"></script>
     <script src="jspm.config.js"></script>
+    <style type="text/css">
+      .compound-fraction {
+        display: flex;
+        align-items: center;
+      }
+      .fraction {
+        display: inline-block;
+        text-align: center;
+      }
+      .fraction > sup {
+        display: block;
+        border-bottom: 1px solid;
+        font: inherit;
+      }
+      .fraction > span {
+        display: none;
+      }
+      .fraction > sub {
+        display: block;
+        font: inherit;
+      }
+
+      .ratio-container {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 5px;
+        border: 1px solid black;
+      }
+    </style>
   </head>
   <body>
-    <h1>circle</h1>
-      <div id="container"></div>
-      <script
-        src="build.js"
-        onload="SystemJS.config({production: true}); SystemJS.import('circle/main.js')"
-        onerror="console.info('Development'); SystemJS.config({trace: true}); SystemJS.import('src/main.js')"
-      ></script>
+    <div id="container">Loading...</div>
+    <script
+      src="build.js"
+      onload="SystemJS.config({production: true}); SystemJS.import('circle/main.js')"
+      onerror="console.info('Development'); SystemJS.config({trace: true}); SystemJS.import('src/main.js')"
+    ></script>
   </body>
 </html>
