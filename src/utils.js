@@ -1,3 +1,33 @@
+// http://stackoverflow.com/a/27696695/2573317
+export const Base64 = (() => {
+  let digitsStr =
+// 0       8       16      24      32      40      48      56     63
+// v       v       v       v       v       v       v       v      v
+  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_-abcdefghijklmnopqrstuvwxyz"
+  let digits = digitsStr.split('')
+  let digitsMap = {}
+  for (let i = 0; i < digits.length; i++) {
+    digitsMap[digits[i]] = i
+  }
+  return {
+    fromInt (int32) {
+      if (int32 < 0) {
+        int32 += 64
+      }
+      if (!(int32 in digits)) {
+        throw new RangeError()
+      }
+      return digits[int32]
+    },
+    toInt (digitsStr) {
+      if (!(digitsStr in digitsMap)) {
+        throw new RangeError()
+      }
+      return digitsMap[digitsStr]
+    }
+  }
+})()
+
 export function observeStore (store, select, onChange) {
   let currentState
 
@@ -16,6 +46,7 @@ export function observeStore (store, select, onChange) {
 
 export const DOT = '·'
 export const Primes = [3, 5, 7, 11, 13]
+const MAX_ORDER = 64 / 2 - 1
 
 const PrimeAngles = Primes.map((p) => 2 * Math.PI * (Math.log2(p) % 1))
 const COMMA = 2 * Math.PI * Math.log2(81 / 80)
@@ -69,7 +100,7 @@ export function getActiveRatios (enabledRatioOrders, toggledRatios) {
 export function getEnabledRatioOrders (limitIndex, toggledRatios) {
   let enabledRatioOrders = [[makeRatio(Array(limitIndex + 1).fill(0))]]
   let seenRatios = new Set([enabledRatioOrders[0][0].json])
-  for (let i = 0; i < enabledRatioOrders.length; i++) {
+  for (let i = 0; i < enabledRatioOrders.length && i < MAX_ORDER - 1; i++) {
     for (let enabledRatio of enabledRatioOrders[i]) {
       if (!(i === 0 || enabledRatio.json in toggledRatios)) {
         continue
@@ -89,13 +120,16 @@ export function getEnabledRatioOrders (limitIndex, toggledRatios) {
   return enabledRatioOrders
 }
 
-// removes trailing zeros and turns to string
-function factorArrayToJson (factorArray) {
-  factorArray = [...factorArray]
-  while (factorArray[factorArray.length - 1] === 0) {
-    factorArray.pop()
+function removeTrailingZeros (array) {
+  array = [...array]
+  while (array[array.length - 1] === 0) {
+    array.pop()
   }
-  return JSON.stringify(factorArray)
+  return array
+}
+
+function factorArrayToJson (factorArray) {
+  return JSON.stringify(removeTrailingZeros(factorArray))
 }
 
 function getComposite (factorArray) {
@@ -103,15 +137,6 @@ function getComposite (factorArray) {
       n > 0 ? Math.pow(Primes[i], n) : 1
     )
     .reduce((p, k) => p * k, 1)
-}
-
-function renderFactors (factorArray) {
-  return factorArray.map((n) => Math.max(n, 0))
-    .map((n, i) =>
-      Array(n).fill(Primes[i]).join(DOT)
-    )
-    .filter((s) => s !== '')
-    .join(DOT)
 }
 
 function makeRatio (factorArray) {
@@ -123,8 +148,6 @@ function makeRatio (factorArray) {
   return {
     num, dem, octave, ratio,
     angle: 2 * Math.PI * Math.log2(ratio),
-    over: num === 1 ? '1' : renderFactors(factorArray),
-    under: dem === 1 ? '1' : renderFactors(factorArray.map((n) => -n)),
     json: factorArrayToJson(factorArray),
     factorArray
   }

@@ -2,6 +2,7 @@
 
 const SELECT_LIMIT = 'SELECT_LIMIT'
 const TOGGLE_RATIO = 'TOGGLE_RATIO'
+const CLEAR_RATIOS = 'CLEAR_RATIOS'
 const SELECT_RATIO_OPTION = 'SELECT_RATIO_OPTION'
 const PLAY_TONE = 'PLAY_TONE'
 const STOP_TONE = 'STOP_TONE'
@@ -11,6 +12,7 @@ const SET_PARAM = 'SET_PARAM'
 export const selectLimit = (limitIndex) => ({ type: SELECT_LIMIT, limitIndex })
 // factorArrayJson: array [n, m, ...] representing ratio 3^n * 5^m * ...
 export const toggleRatio = (factorArrayJson) => ({ type: TOGGLE_RATIO, factorArrayJson })
+export const clearRatios = () => ({ type: CLEAR_RATIOS })
 
 export const selectRatioOption = (ratioFormat) => ({ type: SELECT_RATIO_OPTION, ratioFormat })
 
@@ -58,6 +60,12 @@ export default function rootReducer (state = INIT, action) {
       return Object.assign({}, state, {
         toggledRatios: nextToggledRatios
       })
+    case CLEAR_RATIOS: {
+      return Object.assign({}, state, {
+        toggledRatios: {},
+        playingTones: {}
+      })
+    }
     case SELECT_RATIO_OPTION:
       return Object.assign({}, state, {
         ratioFormat: action.ratioFormat

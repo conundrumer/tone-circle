@@ -1,36 +1,22 @@
 import React from 'react'
 
-import {DOT, Primes} from './utils.js'
-
-const CompoundFraction = ({over, under, num, dem, octave, viewFactored, viewOctaves}) => (
-  <div className='compound-fraction'>
-    <span className='fraction'>
-      <sup>{viewFactored ? over : num * (octave > 0 ? Math.pow(2, octave) : 1)}</sup>
-      <span>/</span>
-      <sub>{viewFactored ? under : dem * (octave < 0 ? Math.pow(2, -octave) : 1)}</sub>
-    </span>
-    {
-      viewOctaves ? <span>&nbsp;{DOT} 2<sup>{octave}</sup></span> : null
-    }
-  </div>
-)
+import CompoundFraction from './CompoundFraction.jsx'
+import {Primes} from './utils.js'
 
 export const RatioSelector = ({
   actions: {
     selectLimit,
     toggleRatio,
-    selectRatioOption
+    selectRatioOption,
+    clearRatios
   },
   ratioInfo: {
     limitIndex,
     toggledRatios,
     enabledRatioOrders
   },
-  ratioFormat: {
-    options,
-    viewFactored,
-    viewOctaves
-  }
+  ratioOptions,
+  ratioURL
 }) => (
   <div style={{padding: 15}}>
     <h2>Ratio Selector</h2>
@@ -38,7 +24,7 @@ export const RatioSelector = ({
       <h4>View Ratios as</h4>
       <ul>
       {
-        options.map(({option, label, selected}, i) =>
+        ratioOptions.map(({option, label, selected}, i) =>
           <li key={i} style={{padding: 5}}>
             <label>{label}:</label>
             <input type='radio' checked={selected} onChange={() => selectRatioOption(option)} />
@@ -60,16 +46,18 @@ export const RatioSelector = ({
     </div>
     <div>
       <h3>Ratios</h3>
+      <p> URL: <a href={ratioURL}>{ratioURL}</a> </p>
+      <button onClick={() => clearRatios()}>Clear</button>
       {
         enabledRatioOrders.map((enabledRatios, i) =>
           i === 0 ? null :
           <div key={i}>
             <span>Order {i}</span>
             {
-              enabledRatios.map((props) =>
-                <span key={props.json} className='ratio-container'>
-                  <CompoundFraction {...props} {...{viewFactored, viewOctaves}} />
-                  <input type='checkbox' checked={props.json in toggledRatios} onChange={() => toggleRatio(props.json)} />
+              enabledRatios.map((ratio) =>
+                <span key={ratio.json} className='ratio-container'>
+                  <CompoundFraction ratio={ratio} />
+                  <input type='checkbox' checked={ratio.json in toggledRatios} onChange={() => toggleRatio(ratio.json)} />
                 </span>
               )
             }
@@ -84,11 +72,11 @@ export const RatioSelector = ({
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import {selectLimit, toggleRatio, selectRatioOption} from './reducer.js'
+import {selectLimit, toggleRatio, selectRatioOption, clearRatios} from './reducer.js'
 import {ratioSelectorSelector as mapStateToProps} from './selectors.js'
 
 const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({selectLimit, toggleRatio, selectRatioOption}, dispatch)
+  actions: bindActionCreators({selectLimit, toggleRatio, selectRatioOption, clearRatios}, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RatioSelector)
