@@ -7,6 +7,10 @@
     <script src="jspm.browser.js"></script>
     <script src="jspm.config.js"></script>
     <style type="text/css">
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
       .compound-fraction {
         display: flex;
         align-items: center;
@@ -35,6 +39,24 @@
         margin: 5px;
         padding: 5px;
         border: 1px solid black;
+      }
+      .tone-circle-container {
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      @media screen and (orientation:portrait) {
+        .tone-circle-svg {
+          width: 95vw;
+          height: 95vw;
+        }
+      }
+      @media screen and (orientation:landscape) {
+        .tone-circle-svg {
+          width: 95vh;
+          height: 95vh;
+        }
       }
     </style>
   </head>

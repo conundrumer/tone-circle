@@ -1,9 +1,9 @@
 import { createSelector, createStructuredSelector } from 'reselect'
 
-import {getEnabledRatioOrders} from './utils.js'
+import {getEnabledRatioOrders, getRatioEdges, getActiveRatios} from './utils.js'
 import RatioFormatInfo, {ratioFormats} from './ratio-format.js'
 
-const getRatioInfo = createSelector(
+const ratioInfoSelector = createSelector(
   (state) => state.limitIndex,
   (state) => state.toggledRatios,
   (limitIndex, toggledRatios) => ({
@@ -13,7 +13,7 @@ const getRatioInfo = createSelector(
   })
 )
 
-const getRatioFormat = createSelector(
+const ratioFormatSelector = createSelector(
   (state) => state.ratioFormat,
   (ratioFormat) => {
     let {viewFactored, viewOctaves} = RatioFormatInfo[ratioFormat]
@@ -27,6 +27,18 @@ const getRatioFormat = createSelector(
 )
 
 export const ratioSelectorSelector = createStructuredSelector({
-  ratioInfo: getRatioInfo,
-  ratioFormat: getRatioFormat
+  ratioInfo: ratioInfoSelector,
+  ratioFormat: ratioFormatSelector
 })
+
+export const toneCircleSelector = createSelector(
+  ratioInfoSelector,
+  (state) => state.limitIndex,
+  ({enabledRatioOrders, toggledRatios}, limitIndex) => {
+    let points = getActiveRatios(enabledRatioOrders, toggledRatios)
+    return {
+      points,
+      edges: getRatioEdges(points, limitIndex)
+    }
+  }
+)

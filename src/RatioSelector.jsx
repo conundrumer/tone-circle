@@ -32,7 +32,7 @@ export const RatioSelector = ({
     viewOctaves
   }
 }) => (
-  <div>
+  <div style={{padding: 15}}>
     <h2>Ratio Selector</h2>
     <div>
       <h4>View Ratios as</h4>
@@ -62,8 +62,9 @@ export const RatioSelector = ({
       <h3>Ratios</h3>
       {
         enabledRatioOrders.map((enabledRatios, i) =>
+          i === 0 ? null :
           <div key={i}>
-            <span>Order {i + 1}</span>
+            <span>Order {i}</span>
             {
               enabledRatios.map((props) =>
                 <span key={props.json} className='ratio-container'>
