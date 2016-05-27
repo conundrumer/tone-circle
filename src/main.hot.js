@@ -15,3 +15,11 @@ export function makeForceRerender (renderApp, container) {
     renderApp()
   }
 }
+
+let audioContext
+export function reloadAudioContext (getAudioContext) {
+  if (!audioContext) {
+    audioContext = getAudioContext()
+  }
+  return () => audioContext
+}

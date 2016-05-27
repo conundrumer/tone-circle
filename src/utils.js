@@ -1,3 +1,19 @@
+export function observeStore (store, select, onChange) {
+  let currentState
+
+  function handleChange () {
+    let nextState = select(store.getState())
+    if (nextState !== currentState) {
+      onChange(nextState, currentState)
+      currentState = nextState
+    }
+  }
+
+  let unsubscribe = store.subscribe(handleChange)
+  handleChange()
+  return unsubscribe
+}
+
 export const DOT = '·'
 export const Primes = [3, 5, 7, 11, 13]
 
@@ -102,10 +118,11 @@ function makeRatio (factorArray) {
   let num = getComposite(factorArray)
   let dem = getComposite(factorArray.map((n) => -n))
   let octave = -Math.floor(Math.log2(num / dem))
+  let ratio = num / dem * Math.pow(2, octave)
 
   return {
-    num, dem, octave,
-    angle: 2 * Math.PI * (Math.log2(num / dem) + octave),
+    num, dem, octave, ratio,
+    angle: 2 * Math.PI * Math.log2(ratio),
     over: num === 1 ? '1' : renderFactors(factorArray),
     under: dem === 1 ? '1' : renderFactors(factorArray.map((n) => -n)),
     json: factorArrayToJson(factorArray),
@@ -119,4 +136,8 @@ function getNextRatios (factorArray, n) {
   over[n] += 1
   under[n] -= 1
   return [makeRatio(over), makeRatio(under)]
+}
+
+Math.log10 = Math.log10 || function (x) {
+  return Math.log(x) / Math.LN10
 }

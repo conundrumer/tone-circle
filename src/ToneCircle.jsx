@@ -13,7 +13,7 @@ const TonePoint = ({ratio: {angle}, playing, onPlay, onStop}) => (
     <circle
       cx={Math.cos(angle)}
       cy={Math.sin(angle)}
-      r={2 * STROKE_WIDTH}
+      r={3 * STROKE_WIDTH}
       fill={playing ? PointColorActive : PointColor}
       stroke={PointStrokeColor}
       strokeWidth={0.4 * STROKE_WIDTH}

@@ -17,7 +17,8 @@
       "react-dom": "npm:react-dom@^15.1.0",
       "react-redux": "npm:react-redux@^4.4.5",
       "redux": "npm:redux@^3.5.2",
-      "reselect": "npm:reselect@^2.5.1"
+      "reselect": "npm:reselect@^2.5.1",
+      "shallow-diff": "npm:shallow-diff@^0.0.5"
     },
     "devDependencies": {
       "babel-plugin-transform-react-jsx": "npm:babel-plugin-transform-react-jsx@^6.8.0",

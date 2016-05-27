@@ -55,6 +55,7 @@ SystemJS.config({
     "react-redux": "npm:react-redux@4.4.5",
     "redux": "npm:redux@3.5.2",
     "reselect": "npm:reselect@2.5.1",
+    "shallow-diff": "npm:shallow-diff@0.0.5",
     "stream": "github:jspm/nodelibs-stream@0.2.0-alpha",
     "string_decoder": "github:jspm/nodelibs-string_decoder@0.2.0-alpha",
     "systemjs-hot-reloader": "github:capaj/systemjs-hot-reloader@0.5.8",
@@ -433,6 +434,11 @@ SystemJS.config({
     "npm:sha.js@2.4.5": {
       "map": {
         "inherits": "npm:inherits@2.0.1"
+      }
+    },
+    "npm:shallow-diff@0.0.5": {
+      "map": {
+        "simple-loop": "npm:simple-loop@0.0.4"
       }
     },
     "npm:stream-browserify@2.0.1": {

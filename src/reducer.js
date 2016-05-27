@@ -5,6 +5,8 @@ const TOGGLE_RATIO = 'TOGGLE_RATIO'
 const SELECT_RATIO_OPTION = 'SELECT_RATIO_OPTION'
 const PLAY_TONE = 'PLAY_TONE'
 const STOP_TONE = 'STOP_TONE'
+const STOP_ALL = 'STOP_ALL'
+const SET_PARAM = 'SET_PARAM'
 
 export const selectLimit = (limitIndex) => ({ type: SELECT_LIMIT, limitIndex })
 // factorArrayJson: array [n, m, ...] representing ratio 3^n * 5^m * ...
@@ -15,6 +17,15 @@ export const selectRatioOption = (ratioFormat) => ({ type: SELECT_RATIO_OPTION, 
 // tone is factorArrayJson
 export const playTone = (tone) => ({ type: PLAY_TONE, tone })
 export const stopTone = (tone) => ({ type: STOP_TONE, tone })
+export const stopAll = () => ({ type: STOP_ALL })
+
+export const setAudioParam = (paramName, paramValue) => ({ type: SET_PARAM, paramName, paramValue })
+export const AudioParamNames = {
+  VOLUME: 'volume',
+  OCTAVES: 'octaves',
+  OSC_TYPE: 'oscType'
+}
+const {VOLUME, OCTAVES, OSC_TYPE} = AudioParamNames
 
 import {COMPOSITE} from './ratio-format.js'
 
@@ -22,7 +33,12 @@ const INIT = {
   limitIndex: 0,
   toggledRatios: {},
   playingTones: {},
-  ratioFormat: COMPOSITE
+  ratioFormat: COMPOSITE,
+  audioParams: {
+    [VOLUME]: -6,
+    [OCTAVES]: 4,
+    [OSC_TYPE]: 'sine'
+  }
 }
 
 export default function rootReducer (state = INIT, action) {
@@ -64,6 +80,16 @@ export default function rootReducer (state = INIT, action) {
         })
       }
       return state
+    case STOP_ALL:
+      return Object.assign({}, state, {
+        playingTones: {}
+      })
+    case SET_PARAM:
+      return Object.assign({}, state, {
+        audioParams: Object.assign({}, state.audioParams, {
+          [action.paramName]: action.paramValue
+        })
+      })
   }
   return state
   // let nextState = reducers(state, action)
