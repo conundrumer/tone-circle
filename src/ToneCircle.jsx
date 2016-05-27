@@ -59,29 +59,32 @@ const TonePoint = ({ratio: {angle}, playing, onPlay, onStop}) => (
 )
 
 const IntervalLine = ({edge: {a, b, diff, primeIndex}}) => (
-  <line
-    x1={K * Math.cos(rotate90(a.angle))}
-    y1={K * Math.sin(rotate90(a.angle))}
-    x2={K * Math.cos(rotate90(b.angle))}
-    y2={K * Math.sin(rotate90(b.angle))}
-    stroke={PrimeColors[primeIndex]}
-    opacity={0.6 * (1 - 0.7 * Math.abs(diff))}
-    strokeWidth={STROKE_WIDTH}
-    markerEnd={`url(#arrow-${primeIndex})`}
-  />
+  <g>
+    <line
+      x1={K * Math.cos(rotate90(a.angle))}
+      y1={K * Math.sin(rotate90(a.angle))}
+      x2={K * Math.cos(rotate90(b.angle))}
+      y2={K * Math.sin(rotate90(b.angle))}
+      stroke={PrimeColors[primeIndex]}
+      opacity={0.6}
+      strokeWidth={STROKE_WIDTH * Math.exp(-4 * Math.abs(diff))}
+      markerEnd={`url(#arrow-${primeIndex})`}
+      strokeDasharray={[K * 0.04, K * 0.4 * Math.abs(diff)].join()}
+    />
+  </g>
 )
 
 const IntervalArrowhead = ({color, i}) => (
   <marker
     id={`arrow-${i}`}
-    viewBox='0 0 2 2'
-    refX={3} refY={1}
-    markerWidth={6}
-    markerHeight={6}
+    viewBox='-1 -1 3 3'
+    refX={2.8} refY={1}
+    markerWidth={8}
+    markerHeight={8}
     orient='auto'
     fill={color}
   >
-    <path d='M 0,0 L 2,1 L 0,2 z' />
+    <path d='M -0.5,0.3 L 2,1 L -0.5,1.7 z' />
   </marker>
 )
 

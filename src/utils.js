@@ -49,14 +49,14 @@ export const Primes = [3, 5, 7, 11, 13]
 const MAX_ORDER = 64 / 2 - 1
 
 const PrimeAngles = Primes.map((p) => 2 * Math.PI * (Math.log2(p) % 1))
-const COMMA = 2 * Math.PI * Math.log2(81 / 80)
+const PrimeTolerances = [26, 42, 20, 15, 10].map(t => t * 2 * Math.PI / 1200)
 
 function makeIntervalEdge (a, b, limitIndex) {
   let angle = b.angle - a.angle
   let [diff, inverted, primeIndex] = Array(limitIndex + 1).fill().map((_, i) => PrimeAngles[i])
     .map((p, i) => [angle - p, angle - (2 * Math.PI - p), i])
     .map(([over, under, i]) => Math.abs(over) < Math.abs(under) ? [over, false, i] : [under, true, i])
-    .filter(([diff]) => Math.abs(diff) < COMMA * (1 + 1e-6))
+    .filter(([diff, _, i]) => Math.abs(diff) < PrimeTolerances[i])
     .reduce(([lowest, inverted, i], [diff, diffInverted, j]) => (
         (lowest == null || Math.abs(diff) < Math.abs(lowest))
         ? [diff, diffInverted, j]
@@ -68,7 +68,7 @@ function makeIntervalEdge (a, b, limitIndex) {
   }
   return {
     primeIndex,
-    diff: diff / COMMA,
+    diff: diff,
     a: a,
     b: b
   }
