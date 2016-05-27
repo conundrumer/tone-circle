@@ -29,17 +29,35 @@ export const AudioParamNames = {
 }
 const {VOLUME, OCTAVES, OSC_TYPE} = AudioParamNames
 
-import {COMPOSITE} from './ratio-format.js'
+import queryString from 'query-string'
+import {Base64} from './utils.js'
+import {NO_OCTAVES} from './ratio-format.js'
 
 const INIT = {
   limitIndex: 0,
   toggledRatios: {},
   playingTones: {},
-  ratioFormat: COMPOSITE,
+  ratioFormat: NO_OCTAVES,
   audioParams: {
     [VOLUME]: -6,
     [OCTAVES]: 4,
     [OSC_TYPE]: 'sine'
+  }
+}
+
+const {ratios} = queryString.parse(location.search)
+if (ratios) {
+  try {
+    let parsed = ratios.split(' ').map((s) =>
+      Array.prototype.map.call(s, Base64.toInt)
+        .map((n) => n > 32 ? n - 64 : n)
+    )
+    for (let ratio of parsed) {
+      INIT.toggledRatios[JSON.stringify(ratio)] = true
+      INIT.limitIndex = Math.max(INIT.limitIndex, ratio.length - 1)
+    }
+  } catch (e) {
+    alert('Could not parse ratios: ' + e.message)
   }
 }
 

@@ -50,6 +50,7 @@ SystemJS.config({
     "path": "github:jspm/nodelibs-path@0.2.0-alpha",
     "plugin-babel": "npm:systemjs-plugin-babel@0.0.10",
     "process": "github:jspm/nodelibs-process@0.2.0-alpha",
+    "query-string": "npm:query-string@4.1.0",
     "react": "npm:react@15.1.0",
     "react-dom": "npm:react-dom@15.1.0",
     "react-redux": "npm:react-redux@4.4.5",
@@ -395,6 +396,11 @@ SystemJS.config({
         "create-hash": "npm:create-hash@1.1.2",
         "parse-asn1": "npm:parse-asn1@5.0.0",
         "randombytes": "npm:randombytes@2.0.3"
+      }
+    },
+    "npm:query-string@4.1.0": {
+      "map": {
+        "strict-uri-encode": "npm:strict-uri-encode@1.1.0"
       }
     },
     "npm:react-redux@4.4.5": {
