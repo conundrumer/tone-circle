@@ -26,19 +26,28 @@ const ratioFormatSelector = createSelector(
   }
 )
 
+const pointSelector = createSelector(
+  ratioInfoSelector,
+  ({enabledRatioOrders, toggledRatios}) => (
+    getActiveRatios(enabledRatioOrders, toggledRatios)
+  )
+)
+
+const edgeSelector = createSelector(
+  pointSelector,
+  (state) => state.limitIndex,
+  (points, limitIndex) => (
+    getRatioEdges(points, limitIndex)
+  )
+)
+
 export const ratioSelectorSelector = createStructuredSelector({
   ratioInfo: ratioInfoSelector,
   ratioFormat: ratioFormatSelector
 })
 
-export const toneCircleSelector = createSelector(
-  ratioInfoSelector,
-  (state) => state.limitIndex,
-  ({enabledRatioOrders, toggledRatios}, limitIndex) => {
-    let points = getActiveRatios(enabledRatioOrders, toggledRatios)
-    return {
-      points,
-      edges: getRatioEdges(points, limitIndex)
-    }
-  }
-)
+export const toneCircleSelector = createStructuredSelector({
+  points: pointSelector,
+  edges: edgeSelector,
+  playingTones: (state) => state.playingTones
+})
