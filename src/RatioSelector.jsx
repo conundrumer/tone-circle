@@ -46,7 +46,7 @@ export const RatioSelector = ({
     </div>
     <div>
       <h3>Ratios</h3>
-      <p> URL: <a href={ratioURL}>{ratioURL}</a> </p>
+      <p> URL: <a href={ratioURL} target='_blank'>{ratioURL}</a> </p>
       <button onClick={() => clearRatios()}>Clear</button>
       {
         enabledRatioOrders.map((enabledRatios, i) =>
