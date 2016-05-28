@@ -55,6 +55,8 @@ const TonePoint = ({ratio: {angle}, playing, onPlay, onStop}) => (
     strokeWidth={0.4 * STROKE_WIDTH}
     onMouseDown={onPlay}
     onMouseUp={onStop}
+    onTouchStart={onPlay}
+    onTouchEnd={onStop}
   />
 )
 
@@ -92,7 +94,7 @@ const PAD = 0.5
 const VIEW_BOX = [-1, -1, 2, 2].map((s) => (s * (1 + PAD)) * K)
 export const ToneCircle = ({edges, points, playingTones, actions: {playTone, stopTone}}) => (
   <div className='tone-circle-container'>
-    <svg className='tone-circle-svg' viewBox={VIEW_BOX} onMouseDown={(e) => e.preventDefault()}>
+    <svg className='tone-circle-svg' viewBox={VIEW_BOX} onMouseDown={(e) => e.preventDefault()} onTouchStart={(e) => e.preventDefault()}>
        <defs>
         {
           PrimeColors.map((color, i) =>

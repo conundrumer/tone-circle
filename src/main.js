@@ -19,7 +19,7 @@ import createTonePlayer from './tone-player.js'
 let store = configureStore()
 
 /* tone player */
-let getAudioContext = () => (console.log('created audio context'), new AudioContext())
+let getAudioContext = () => (console.log('created audio context'), new (window.AudioContext || window.webkitAudioContext)())
 
 if (__HOT__) getAudioContext = reloadAudioContext(getAudioContext)
 
